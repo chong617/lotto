@@ -1,68 +1,177 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Lottomato</title>
-        <link href ="style.css" type ="text/css" rel ="stylesheet" />
-        </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Fair Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .survey-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="email"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        async function handleSubmit(event) {
+            event.preventDefault();
 
-        <body>
-            <img src ="lotto.jpg" alt ="lotto"/>
-            <div id = "text">
-            <div class= "component">
-            <h1>mobile app</h1><br />
+            const formData = {
+                companyName: document.getElementById('companyName').value,
+                companyTitle: document.getElementById('companyTitle').value,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                sponsor: document.getElementById('sponsor').value,
+                talents: document.getElementById('talents').value,
+                candidates: document.getElementById('candidates').value,
+                boothPayment: document.getElementById('boothPayment').value,
+                preferredMonth: document.getElementById('preferredMonth').value,
+                locationAffect: document.getElementById('locationAffect').value,
+                feedback: document.getElementById('feedback').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert('Survey submitted successfully!');
+                } else {
+                    alert('Failed to submit survey.');
+                }
+            } catch (error) {
+                alert('Error submitting survey.');
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="survey-container">
+        <h1>Job Fair Survey</h1>
+        <form action="/submit" method = "POST">
+            <div class="form-group">
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" name="companyName" required>
             </div>
-
-            <h3><strong>Crab Your Phone and Download It !</strong></h3><br />
-            <p>It's easy to get and to use. Just download it as a mobile app </p><br /><br />
-
-            <nav class= "component_pic">
-                <a href="https://itunes.apple.com/us/app/california-lottery-official/id874978299?mt=8" class="footer--icon" target="_blank">
-                    <img src= "apple.jpg" alt="Download on the Apple App Store, opens a new window" style="width: 151px; height: 45px;">
-                    </a>
-
-                <a href="https://play.google.com/store/apps/details?id=gov.ca.lot.caLotteryApp" class="footer--icon" target="_blank">
-                    <img alt="Download on the Google Play, opens a new window" src="google.jpg" style="width: 151px; height: 45px;">
-                    </a>
-            </nav>
-
-            <p>Along with seeing if you won, you will be able to:</p>
-
-            <div class ="list">
-                <ul>
-                  <li>Check winning numbers and jackpot amounts for your favorite draw games.</li>
-                  <li>See Hot Spot draw results, updated every 4 minutes.</li>
-                  <li>Scan your 2nd Chance codes into weekly drawings for:</li>
-
-                <div class ="listtwo">
-                    <ol>
-                        <li>Non-winning Scratchers</li>
-                        <li>SuperLotto Plus</li>
-                        <li>Fantasy 5</li>
-                    </ol>
-                </div>
-                <li>Track your 2nd Chance submission count for the month.</li>
-                <li>View the details of your last 25 submissions</li>
-                <li>See the latest 2nd Chance promotions and winners.</li>
-                <li>Find a Lottery retailer near you.</li>
-                </ul>
-               </div>
+            <div class="form-group">
+                <label for="companyTitle">Company Title:</label>
+                <input type="text" id="companyTitle" name="companyTitle" required>
             </div>
-
-               <div class ="listthree">
-                   <h1>What is it about?</h1>
-                   <h2>for a limited time only:</h2><br />
-                   <img src="lottotwo.jpg" alt ="lotto" style= "width: 100%; height: 800px"/>
-               </div>
-            
-          
-        </body>
-
-
-
-
-
-
-
-
-
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="sponsor">Does your company consider to be the Sponsor for this job fair?</label>
+                <input type="text" id="sponsor" name="sponsor" required>
+            </div>
+            <div class="form-group">
+                <label for="talents">What kind of talents are your company looking to recruit at this job fair, list below:</label>
+                <input type="text" id="talents" name="talents" required>
+            </div>
+            <div class="form-group">
+                <label for="candidates">How many candidates are your company going to recruit?</label>
+                <select id="candidates" name="candidates" required>
+                    <option value="">Select...</option>
+                    <option value="1-10">1-10</option>
+                    <option value="10-20">10-20</option>
+                    <option value="20-30">20-30</option>
+                    <option value="Above 30">Above 30</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="boothPayment">How much do you think is appropriate paying for the Booth area?</label>
+                <select id="boothPayment" name="boothPayment" required>
+                    <option value="">Select...</option>
+                    <option value="Free">Free</option>
+                    <option value="$0 - $300">$0 - $300</option>
+                    <option value="$300 - $500">$300 - $500</option>
+                    <option value="$500-$1000">$500-$1000</option>
+                    <option value="Above $1000">Above $1000</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="preferredMonth">Which Month will your company prefer job fairs?</label>
+                <select id="preferredMonth" name="preferredMonth" required>
+                    <option value="">Select...</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                    <option value="As long as recruitment need">As long as recruitment need</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="locationAffect">Would the location of the job fair affect your company's participation in the Bay Area?</label>
+                <select id="locationAffect" name="locationAffect" required>
+                    <option value="">Select...</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="feedback">Additional Feedback:</label>
+                <textarea id="feedback" name="feedback" rows="4"></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
 </html>
